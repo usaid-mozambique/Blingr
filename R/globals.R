@@ -12,5 +12,8 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                           "active_award_number",  "document_number",
                           "transaction_disbursement", "transaction_obligation",
                          "avg_monthly_exp_rate",  "active_award_number",
-                         "transaction_date", "quarter", "fiscal_year"
+                         "transaction_date", "quarter", "fiscal_year", "document_date",
+                         "unliquidated_amt", "outstanding_advance_amt", "fund_status",
+                         "obligation_type_filter", "distribution_filter","award_numbers",
+                         "period_month", "program_area_name"
                          ))
