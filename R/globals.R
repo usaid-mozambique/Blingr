@@ -1,0 +1,9 @@
+utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
+                         "u_s_org_local", "period", "activity_name", "total_estimated_cost",
+                         "start_date", "end_date", "aor_cor_or_activity_manager",
+                         "funding_type", "pepfar_funding","obligation_type",
+                         "distribution", "document_amt", "obligation_amt",
+                         "subobligation_amt", "disbursement_amt", "undisbursed_amt",
+                         "last_qtr_accrual_amt", "document_number", "program_area",
+                         "program_element", "pipeline_amt", "bilateral_obl_number",
+                         "total_disbursement_outlays"))
