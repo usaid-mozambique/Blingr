@@ -6,4 +6,11 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "subobligation_amt", "disbursement_amt", "undisbursed_amt",
                          "last_qtr_accrual_amt", "document_number", "program_area",
                          "program_element", "pipeline_amt", "bilateral_obl_number",
-                         "total_disbursement_outlays"))
+                         "total_disbursement_outlays", "obl_document_number",
+                         "transaction_event", "transaction_amt", "transaction_event_type",
+                         "active_award_number", "avg_monthly_exp_rate", "fiscal_transaction_date",
+                          "active_award_number",  "document_number",
+                          "transaction_disbursement", "transaction_obligation",
+                         "avg_monthly_exp_rate",  "active_award_number",
+                         "transaction_date", "quarter", "fiscal_year"
+                         ))
