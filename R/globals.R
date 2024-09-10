@@ -18,4 +18,8 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "period_month", "program_area_name", "funding_office_code",
                          "fund_crcy_avail_for_subobl_amt", "fund_crcy_subcmmt_unsubobl_amt",
                          "bfy_fund", "funding_year", "actg_line", "program_sub_element",
-                         "fund_fully_expired_year", "fund_cancelled_year", "fund_crcy_avail_for_subcommit_amt"))
+                         "fund_fully_expired_year", "fund_cancelled_year", "fund_crcy_avail_for_subcommit_amt",
+                         "implementing_mechanism", "planned_subobligations_for_the_next_months",
+                         "total_obligations_this_fy", "projected_monthly_burn_rate",
+                         "un_sub_obligated_funds", "planned_sub_oblig_date",
+                         "approved_budget_cop_op", "unliquidated_obligations_at_the_beginning_of_the_fy"))
