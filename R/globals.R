@@ -15,5 +15,7 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "transaction_date", "quarter", "fiscal_year", "document_date",
                          "unliquidated_amt", "outstanding_advance_amt", "fund_status",
                          "obligation_type_filter", "distribution_filter","award_numbers",
-                         "period_month", "program_area_name"
-                         ))
+                         "period_month", "program_area_name", "funding_office_code",
+                         "fund_crcy_avail_for_subobl_amt", "fund_crcy_subcmmt_unsubobl_amt",
+                         "bfy_fund", "funding_year", "actg_line", "program_sub_element",
+                         "fund_fully_expired_year", "fund_cancelled_year", "fund_crcy_avail_for_subcommit_amt"))
