@@ -26,6 +26,7 @@ bi_ablg_acc_lines_clean <- bilateral_oblg_acc_lines_raw |>
            fund_cancelled_year, fund_crcy_avail_for_subcommit_amt, fund_crcy_subcmmt_unsubobl_amt,
            fund_crcy_avail_for_subobl_amt, bfy_fund) |>
     dplyr::mutate(funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
+                  funding_year = paste0("FY", funding_year),
            #renaming old program areas to new
            program_area = dplyr::case_when(program_element == "A047" ~ "HL.1",
                                     program_element == "A048"~ "HL.2",
