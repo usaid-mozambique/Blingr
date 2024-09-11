@@ -5,14 +5,14 @@
 \title{Create a clean dataset from phoneix obligation accounting lines dataset}
 \usage{
 process_phoenix_oblg_acc_lines(
-  path,
+  file,
   award_numbers,
   OBLIGATION_TYPE_FILTER,
   DISTRIBUTION_FILTER
 )
 }
 \arguments{
-\item{path}{path to the phoenix obligation accounting lines dataset}
+\item{file}{a dataset to clean}
 
 \item{award_numbers}{a vector of award numbers to filter the dataset}
 
@@ -28,7 +28,7 @@ Create a clean dataset from phoneix obligation accounting lines dataset
 }
 \examples{
 \dontrun{
- df <- process_phoenix_oblg_acc_lines(phoenix_path, award_numbers,
+ df <- process_phoenix_oblg_acc_lines(file, award_numbers,
  obligation_type_filter, distribution_filter)
  }
 }

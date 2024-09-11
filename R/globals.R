@@ -22,4 +22,5 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "implementing_mechanism", "planned_subobligations_for_the_next_months",
                          "total_obligations_this_fy", "projected_monthly_burn_rate",
                          "un_sub_obligated_funds", "planned_sub_oblig_date",
-                         "approved_budget_cop_op", "unliquidated_obligations_at_the_beginning_of_the_fy"))
+                         "approved_budget_cop_op", "unliquidated_obligations_at_the_beginning_of_the_fy",
+                         "active_awards_number", "new_program_area"))
