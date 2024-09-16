@@ -27,5 +27,6 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "bilateral_actg_line", "commitment_header_description", "commitment_source", "operating_unit",
                          "original_date", "outstanding_days_of_cmmt", "activity", "cmmt_less_than_30_days",
                          "cmmt_amt_between_31_to_90_days", "cmmt_amt_between_91_to_180_days", "cmmt_amt_above_180_days",
-                         "period"
+                         "period", "Period", "Actg Line", "Fund Fully Expired Year", "Fund Cancelled Year", "Total",
+                         "Value"
                          ))
