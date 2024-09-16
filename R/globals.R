@@ -26,5 +26,6 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "active_awards_number", "new_program_area", "commitment_type", "open_commitment_amt",
                          "bilateral_actg_line", "commitment_header_description", "commitment_source", "operating_unit",
                          "original_date", "outstanding_days_of_cmmt", "activity", "cmmt_less_than_30_days",
-                         "cmmt_amt_between_31_to_90_days", "cmmt_amt_between_91_to_180_days", "cmmt_amt_above_180_days"
+                         "cmmt_amt_between_31_to_90_days", "cmmt_amt_between_91_to_180_days", "cmmt_amt_above_180_days",
+                         "period"
                          ))
