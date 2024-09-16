@@ -12,7 +12,8 @@
 create_history_open_commitments <- function(file) {
 
     temp <- readxl::read_xlsx(file) |>
-
+        janitor::clean_names() |>
+        tidyr::drop_na(document_number) |>
         dplyr::mutate(
             filename = basename(file),
             period = stringr::str_extract(filename, "^[^_]+"),
