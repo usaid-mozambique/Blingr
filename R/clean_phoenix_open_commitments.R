@@ -28,6 +28,8 @@ clean_phoenix_open_commitments <- function(file){
                        cmmt_amt_above_180_days = dplyr::if_else(outstanding_days_of_cmmt > 180, open_commitment_amt, 0),
                        activity = ""
         ) |>
+        dplyr::filter(stringr::str_detect(bfy_fund,"GH-C"), operating_unit == "MOZAMBIQUE") |>
+        tidyr::drop_na(document_number) |>
         dplyr::select(activity, commitment_type, document_number, actg_line,
                       open_commitment_amt, bfy_fund, operating_unit, program_area,
                       distribution, program_element, original_date,
