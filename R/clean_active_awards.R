@@ -11,7 +11,7 @@
 #' \dontrun{
 #'  df <- process_active_awards("path/to/Active Awards.xlsx")
 #'  }
-process_active_awards <- function(ACTIVE_AWARDS_PATH){
+clean_active_awards <- function(ACTIVE_AWARDS_PATH){
 
 
     temp <- readxl::read_xlsx(ACTIVE_AWARDS_PATH,

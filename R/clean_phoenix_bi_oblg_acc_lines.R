@@ -11,7 +11,7 @@
 #'  df <- process_bilateral_oblg_acc_lines(path)
 #'  }
 
-process_phoenix_bi_oblg_acc_lines <- function(path){
+clean_phoenix_bi_oblg_acc_lines <- function(path){
 
 bilateral_oblg_acc_lines_raw <- readxl::read_excel(path)
 

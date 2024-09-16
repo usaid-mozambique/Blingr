@@ -14,7 +14,7 @@
 #'  obligation_type_filter, distribution_filter)
 #'  }
 
-process_phoenix_oblg_acc_lines <- function(file, award_numbers,OBLIGATION_TYPE_FILTER,DISTRIBUTION_FILTER){
+clean_phoenix_oblg_acc_lines <- function(file, award_numbers,OBLIGATION_TYPE_FILTER,DISTRIBUTION_FILTER){
 
     temp <- file |>
         janitor::clean_names() |>

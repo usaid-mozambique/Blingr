@@ -13,7 +13,7 @@
 #'  df <- process_phoenix_pipeline(phoenix_pipeline_path, award_number,
 #'  obligation_type_filter, distribution_filter)
 #'  }
-process_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
+clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
                                      obligation_type_filter, distribution_filter){
 
     #adjust column names

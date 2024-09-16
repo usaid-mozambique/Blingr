@@ -9,12 +9,12 @@
 #'
 #' @examples
 #' \dontrun{
-#'  df <- process_phoenix_transaction(phoenix_trnsaction_path, award_number,
+#'  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
 #'   distribution_filter)
 #'  }
 
 
-process_phoenix_transaction <- function(PHOENIX_TRANSACTION_PATH, all_award_number, distribution_filter){
+clean_phoenix_transaction <- function(PHOENIX_TRANSACTION_PATH, all_award_number, distribution_filter){
 
     temp <- readxl::read_xlsx(PHOENIX_TRANSACTION_PATH,
                               col_types = "text") |>

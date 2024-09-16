@@ -7,9 +7,9 @@
 #'
 #' @examples
 #' \dontrun{
-#'  df <- process_subobligation_summary("path/to/subobligation_summary.xlsx")
+#'  df <- clean_subobligation_summary("path/to/subobligation_summary.xlsx")
 #'  }
-process_subobligation_summary <- function(SUBOBLIGATION_SUMMARY_PATH){
+clean_subobligation_summary <- function(SUBOBLIGATION_SUMMARY_PATH){
 
 
     lookup <- c("unliquidated_obligations_beg_fy" = "unliquidated_obligations_at_the_beginning_of_the_fy")
