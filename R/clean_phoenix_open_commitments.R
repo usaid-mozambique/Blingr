@@ -20,14 +20,7 @@ clean_phoenix_open_commitments <- function(file){
                       distribution, program_element, original_date, bilateral_obl_number,
                       bilateral_actg_line, commitment_header_description,
                       fund_status, commitment_source) |>
-        dplyr::mutate( original_date = lubridate::as_date(original_date),
-                       outstanding_days_of_cmmt = as.numeric(lubridate::today() - original_date),
-                       cmmt_less_than_30_days = dplyr::if_else(outstanding_days_of_cmmt <= 30, open_commitment_amt, 0),
-                       cmmt_amt_between_31_to_90_days = dplyr::if_else(outstanding_days_of_cmmt > 30 & outstanding_days_of_cmmt <= 90, open_commitment_amt, 0),
-                       cmmt_amt_between_91_to_180_days = dplyr::if_else(outstanding_days_of_cmmt > 90 & outstanding_days_of_cmmt <= 180, open_commitment_amt, 0),
-                       cmmt_amt_above_180_days = dplyr::if_else(outstanding_days_of_cmmt > 180, open_commitment_amt, 0),
-                       activity = ""
-        ) |>
+
         dplyr::filter(operating_unit == "MOZAMBIQUE") |>
         tidyr::drop_na(document_number) |>
 
