@@ -17,7 +17,7 @@ create_history_open_commitments <- function(file) {
         dplyr::mutate(
             filename = basename(file),
             period = stringr::str_extract(filename, "^[^_]+"),
-            period = lubridate::ymd(period)
+            period = lubridate::ym(period)
         ) |>
         dplyr::select(-c(filename)) |>
         dplyr::mutate( original_date = lubridate::as_date(original_date),
