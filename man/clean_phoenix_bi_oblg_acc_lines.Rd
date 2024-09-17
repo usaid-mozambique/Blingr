@@ -4,10 +4,10 @@
 \alias{clean_phoenix_bi_oblg_acc_lines}
 \title{Title: Process Bilateral Obligation Account Lines}
 \usage{
-clean_phoenix_bi_oblg_acc_lines(path)
+clean_phoenix_bi_oblg_acc_lines(file)
 }
 \arguments{
-\item{path}{Path to the file containing the raw data}
+\item{file}{file containing raw data}
 }
 \value{
 A tibble with the cleaned data
@@ -17,6 +17,6 @@ Title: Process Bilateral Obligation Account Lines
 }
 \examples{
 \dontrun{
- df <- process_bilateral_oblg_acc_lines(path)
+ df <- clean_phoenix_bi_oblg_acc_lines(file)
  }
 }

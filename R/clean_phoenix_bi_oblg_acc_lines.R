@@ -1,21 +1,19 @@
 
 #' Title: Process Bilateral Obligation Account Lines
 #'
-#' @param path Path to the file containing the raw data
+#' @param file file containing raw data
 #'
 #' @return A tibble with the cleaned data
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'  df <- process_bilateral_oblg_acc_lines(path)
+#'  df <- clean_phoenix_bi_oblg_acc_lines(file)
 #'  }
 
-clean_phoenix_bi_oblg_acc_lines <- function(path){
+clean_phoenix_bi_oblg_acc_lines <- function(file){
 
-bilateral_oblg_acc_lines_raw <- readxl::read_excel(path)
-
-bi_ablg_acc_lines_clean <- bilateral_oblg_acc_lines_raw |>
+temp <- file |>
     janitor::clean_names() |>
     dplyr::filter(funding_office_code == "IHO",
            fund_crcy_avail_for_subobl_amt > 1) |>
@@ -26,34 +24,15 @@ bi_ablg_acc_lines_clean <- bilateral_oblg_acc_lines_raw |>
            fund_cancelled_year, fund_crcy_avail_for_subcommit_amt, fund_crcy_subcmmt_unsubobl_amt,
            fund_crcy_avail_for_subobl_amt, bfy_fund) |>
     dplyr::mutate(funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
-                  funding_year = paste0("FY", funding_year),
-           #renaming old program areas to new
-           program_area = dplyr::case_when(program_element == "A047" ~ "HL.1",
-                                    program_element == "A048"~ "HL.2",
-                                    program_element == "A049"~ "HL.3",
-                                    program_element == "A050"~ "HL.4",
-                                    program_element == "A051"~ "HL.5",
-                                    program_element == "A052"~ "HL.6",
-                                    program_element == "A053"~ "HL.7",
-                                    program_element == "A054"~ "HL.8",
-                                    program_element == "A142"~ "HL.9",
-                                    program_element == "A141"~ "PO.2",
-                                    program_element == "A140"~ "PO.1",
-                                    TRUE ~ program_area),
-           program_area_name = dplyr::case_when(program_area == "HL.1" ~ "HIV/AIDS",
-                                         program_area == "HL.6" ~ "MCH",
-                                         program_area == "HL.4"~ "GHS" ,
-                                         program_area == "HL.9"~ "Nutrition",
-                                         program_area == "HL.7"~  "FP/RH",
-                                         program_area == "HL.2" ~ "TB",
-                                         program_area == "HL.3" ~ "Malaria",
-                                         program_area == "HL.8" ~ "WASH",
-                                         program_area == "PO.1"~ "PD&L",
-                                         program_area == "PO.2" ~"A&O",
-                                         program_area == "DR.4" ~ "Civil Society",
-                                         program_area == "DR.6" ~ "Human Rights",
-                                         program_area == "DR.3" ~ "Political Competition and Consensus-Building",
-                                         TRUE ~ as.character(program_area)),) |>
+                  funding_year = paste0("FY", funding_year)) |>
+
+    #rename old program_areas to match the new
+    dplyr::left_join(blingr::data_program_element_map, by = c("program_element" = "old_program_element")) |>
+    dplyr::mutate(program_area = dplyr::if_else(is.na(new_program_area), program_area, new_program_area)) |>
+    dplyr::select(-new_program_area) |>
+
+    #add program area names
+    dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
     dplyr::select(document_number, actg_line, fund_crcy_avail_for_subcommit_amt,fund_crcy_subcmmt_unsubobl_amt,
            fund_crcy_avail_for_subobl_amt, funding_year, bfy_fund, program_area_name,
            program_area, program_element, distribution, fund_status, fund_fully_expired_year,
