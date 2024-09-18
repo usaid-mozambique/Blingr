@@ -31,12 +31,12 @@ clean_phoenix_open_commitments <- function(file){
 
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
+
+        #add program element name (not available in open commitments dataset)
+        dplyr::left_join(blingr::data_program_element_name_map, by = "program_element") |>
         dplyr::select(activity, commitment_type, document_number, actg_line,
                       open_commitment_amt, bfy_fund, operating_unit, program_area, program_area_name,
-                      distribution, program_element, original_date,
-                      outstanding_days_of_cmmt, cmmt_less_than_30_days,
-                      cmmt_amt_between_31_to_90_days, cmmt_amt_between_91_to_180_days,
-                      cmmt_amt_above_180_days, bilateral_obl_number,
+                      distribution, program_element, original_date, bilateral_obl_number,
                       bilateral_actg_line, commitment_header_description,
                       fund_status, commitment_source)
     return(temp)
