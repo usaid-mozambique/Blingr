@@ -24,3 +24,17 @@
 #'   \item{data_program_element_map}{new_program_area}
 #' }
 "data_program_element_map"
+
+
+#' Variable map for mapping program element names to program elements
+#'
+#' List of indicators
+#'
+#' @usage data(data_program_element_name_map)
+#'
+#' @format A list of the variables included to engineer dataset features
+#' \describe{
+#'   \item{data_program_element_name_map}{program_element}
+#'   \item{data_program_element_name_map}{program_element_name}
+#' }
+"data_program_element_name_map"
