@@ -36,7 +36,7 @@ clean_phoenix_open_commitments <- function(file){
         dplyr::left_join(blingr::data_program_element_name_map, by = "program_element") |>
         dplyr::select(commitment_type, document_number, actg_line,
                       open_commitment_amt, bfy_fund, operating_unit, program_area, program_area_name,
-                      distribution, program_element, original_date, bilateral_obl_number,
+                      distribution, program_element, program_element_name, original_date, bilateral_obl_number,
                       bilateral_actg_line, commitment_header_description,
                       fund_status, commitment_source)
     return(temp)
