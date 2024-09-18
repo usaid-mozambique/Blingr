@@ -20,7 +20,7 @@ temp <- file |>
 
     #step 1:  keep relevant columns
     dplyr::select(document_number, actg_line, program_area,distribution,
-           program_element, program_sub_element, fund_status, fund_fully_expired_year,
+           program_element, program_element_name, program_sub_element, fund_status, fund_fully_expired_year,
            fund_cancelled_year, fund_crcy_avail_for_subcommit_amt, fund_crcy_subcmmt_unsubobl_amt,
            fund_crcy_avail_for_subobl_amt, bfy_fund) |>
     dplyr::mutate(funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
@@ -35,7 +35,7 @@ temp <- file |>
     dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
     dplyr::select(document_number, actg_line, fund_crcy_avail_for_subcommit_amt,fund_crcy_subcmmt_unsubobl_amt,
            fund_crcy_avail_for_subobl_amt, funding_year, bfy_fund, program_area_name,
-           program_area, program_element, distribution, fund_status, fund_fully_expired_year,
+           program_area, program_element_name, program_element, program_sub_element, distribution, fund_status, fund_fully_expired_year,
            fund_cancelled_year) |>
     dplyr::arrange(program_area) |>
     dplyr::rename('Document Number' = document_number,
@@ -48,6 +48,8 @@ temp <- file |>
            'Program Area Name' = program_area_name,
            'Program Area' = program_area,
            'Program Element' = program_element,
+           'Program Element Name' = program_element_name,
+           'Program Sub Element' = program_sub_element,
            'Distribution' = distribution,
            'Fund Status' = fund_status,
            'Fund Fully Expired Year' = fund_fully_expired_year,
