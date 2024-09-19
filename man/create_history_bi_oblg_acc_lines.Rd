@@ -4,10 +4,12 @@
 \alias{create_history_bi_oblg_acc_lines}
 \title{Create history of bi_oblg_acc_lines}
 \usage{
-create_history_bi_oblg_acc_lines(file)
+create_history_bi_oblg_acc_lines(file, is_pepfar)
 }
 \arguments{
 \item{file}{A dataset with Phoenix Open Commitments data}
+
+\item{is_pepfar}{TRUE if a PEPFAR dataset, FALSE if a non_pepfar dataset}
 }
 \value{
 A cleaned dataset

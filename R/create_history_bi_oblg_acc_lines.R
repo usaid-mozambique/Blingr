@@ -1,6 +1,7 @@
 #' Create history of bi_oblg_acc_lines
 #'
 #' @param file A dataset with Phoenix Open Commitments data
+#' @param is_pepfar TRUE if a PEPFAR dataset, FALSE if a non_pepfar dataset
 #'
 #' @return A cleaned dataset
 #' @export
@@ -10,9 +11,19 @@
 #'  df <- create_history_bi_oblg_acc_lines(file)
 #'  }
 
-create_history_bi_oblg_acc_lines <- function(file) {
+create_history_bi_oblg_acc_lines <- function(file, is_pepfar) {
 
-    temp <- readxl::read_xlsx(file) |>
+    # Read the file
+    if (is_pepfar) {
+        temp <- readxl::read_xlsx(file, skip = 10)
+        print("is_pepfar")
+
+
+    } else {
+        temp <- readxl::read_xlsx(file)
+    }
+
+    temp <- temp |>
         dplyr::select(-dplyr::starts_with("...")) |>  # Remove auto-generated column names
         tidyr::drop_na("Document Number") |>
 
