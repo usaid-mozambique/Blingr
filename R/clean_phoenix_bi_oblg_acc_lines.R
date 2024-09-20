@@ -35,7 +35,7 @@ clean_phoenix_bi_oblg_acc_lines <- function(file){
         dplyr::select(funding_office_code, document_number, actg_line, fund_crcy_avail_for_subcommit_amt,
                       fund_crcy_subcmmt_unsubobl_amt, fund_crcy_obligation_amt,
                       fund_crcy_subcommitment_amt, fund_crcy_subobligation_amt,
-                      funding_year, bfy_fund, program_area_name,
+                      funding_year, bfy_fund, program_area_name,fund_crcy_avail_for_subobl_amt,
                       program_area, program_element_name, program_element, program_sub_element, operating_unit,
                       distribution, fund_status, agreement_status, fund_fully_expired_year, fund_crcy,
                       fund_cancelled_year) |>
