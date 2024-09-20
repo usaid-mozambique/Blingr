@@ -16,9 +16,6 @@ create_history_bi_oblg_acc_lines <- function(file, is_pepfar) {
     # Read the file
     if (is_pepfar) {
         temp <- readxl::read_xlsx(file, skip = 10)
-        print("is_pepfar")
-
-
     } else {
         temp <- readxl::read_xlsx(file)
     }
@@ -42,10 +39,10 @@ create_history_bi_oblg_acc_lines <- function(file, is_pepfar) {
 
     # Convert all columns from 16th onwards to numeric using all_of()
     temp <- temp |>
-        dplyr::mutate(dplyr::across(16:num_cols, as.numeric)) |>
+        dplyr::mutate(dplyr::across(23:num_cols, as.numeric)) |>
 
         # Pivoting data to long format
-        tidyr::pivot_longer(cols = -dplyr::all_of(1:15), names_to = "Mechanism", values_to = "Value") |>
+        tidyr::pivot_longer(cols = -dplyr::all_of(1:22), names_to = "Mechanism", values_to = "Value") |>
         dplyr::mutate(Value = as.numeric(Value))
 
     return(temp)

@@ -21,7 +21,6 @@ clean_phoenix_open_commitments <- function(file){
                       bilateral_actg_line, commitment_header_description,
                       fund_status, commitment_source) |>
 
-        dplyr::filter(operating_unit == "MOZAMBIQUE") |>
         tidyr::drop_na(document_number) |>
 
         #rename old program_areas to match the new
