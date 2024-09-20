@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  df <- process_active_awards("path/to/Active Awards.xlsx")
+#'  df <- clean_ctive_awards("path/to/Active Awards.xlsx")
 #'  }
 clean_active_awards <- function(ACTIVE_AWARDS_PATH){
 

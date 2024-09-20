@@ -41,7 +41,7 @@ temp <- file |>
     dplyr::rename('Document Number' = document_number,
            'Actg Line' = actg_line,
            'Avail for Subcommit Amt' = fund_crcy_avail_for_subcommit_amt,
-           'SubcmMt Unsubobl Amt' = fund_crcy_subcmmt_unsubobl_amt,
+           'Subcmmt Unsubobl Amt' = fund_crcy_subcmmt_unsubobl_amt,
            'Avail for Subobl Amt' = fund_crcy_avail_for_subobl_amt,
            'Funding Year' = funding_year,
            'BFY/Fund' = bfy_fund,

@@ -19,6 +19,6 @@ Create a clean dataset from Active Awards google sheet (template from USAID Moza
 }
 \examples{
 \dontrun{
- df <- process_active_awards("path/to/Active Awards.xlsx")
+ df <- clean_ctive_awards("path/to/Active Awards.xlsx")
  }
 }
