@@ -21,7 +21,7 @@ clean_phoenix_bi_oblg_acc_lines <- function(file){
                       program_element, program_element_name, program_sub_element, fund_status, fund_fully_expired_year,
                       fund_cancelled_year, fund_crcy_avail_for_subcommit_amt, fund_crcy_subcmmt_unsubobl_amt, fund_crcy_obligation_amt,
                       fund_crcy_subcommitment_amt, fund_crcy_subobligation_amt, operating_unit, agreement_status,
-                      fund_crcy_avail_for_subobl_amt, bfy_fund, fund_crcy, ) |>
+                      fund_crcy_avail_for_subobl_amt, bfy_fund, fund_crcy, funding_office_code) |>
         dplyr::mutate(funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
                       funding_year = paste0("FY", funding_year)) |>
 

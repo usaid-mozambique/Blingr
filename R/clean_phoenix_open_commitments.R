@@ -18,7 +18,7 @@ clean_phoenix_open_commitments <- function(file){
         dplyr::select(commitment_type, document_number, actg_line,
                       open_commitment_amt, bfy_fund, operating_unit, program_area,
                       distribution, program_element, original_date, bilateral_obl_number,
-                      bilateral_actg_line, commitment_header_description,
+                      bilateral_actg_line, commitment_header_description, funding_office_code,
                       fund_status, commitment_source) |>
 
         tidyr::drop_na(document_number) |>
@@ -33,7 +33,7 @@ clean_phoenix_open_commitments <- function(file){
 
         #add program element name (not available in open commitments dataset)
         dplyr::left_join(blingr::data_program_element_name_map, by = "program_element") |>
-        dplyr::select(commitment_type, document_number, actg_line,
+        dplyr::select(funding_office_code, commitment_type, document_number, actg_line,
                       open_commitment_amt, bfy_fund, operating_unit, program_area, program_area_name,
                       distribution, program_element, program_element_name, original_date, bilateral_obl_number,
                       bilateral_actg_line, commitment_header_description,
