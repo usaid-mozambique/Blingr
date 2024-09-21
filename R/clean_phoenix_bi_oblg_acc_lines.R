@@ -1,4 +1,5 @@
 
+
 #' Title: Process Bilateral Obligation Account Lines
 #'
 #' @param file file containing raw data
@@ -11,34 +12,74 @@
 #'  df <- clean_phoenix_bi_oblg_acc_lines(file)
 #'  }
 
-clean_phoenix_bi_oblg_acc_lines <- function(file){
-
+clean_phoenix_bi_oblg_acc_lines <- function(file) {
     temp <- file |>
         janitor::clean_names() |>
 
         #step 1:  keep relevant columns
-        dplyr::select(document_number, actg_line, program_area,distribution,
-                      program_element, program_element_name, program_sub_element, fund_status, fund_fully_expired_year,
-                      fund_cancelled_year, fund_crcy_avail_for_subcommit_amt, fund_crcy_subcmmt_unsubobl_amt, fund_crcy_obligation_amt,
-                      fund_crcy_subcommitment_amt, fund_crcy_subobligation_amt, operating_unit, agreement_status,
-                      fund_crcy_avail_for_subobl_amt, bfy_fund, fund_crcy, funding_office_code) |>
-        dplyr::mutate(funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
-                      funding_year = paste0("FY", funding_year)) |>
+        dplyr::select(
+            document_number,
+            actg_line,
+            program_area,
+            distribution,
+            program_element,
+            program_element_name,
+            program_sub_element,
+            fund_status,
+            fund_fully_expired_year,
+            fund_cancelled_year,
+            fund_crcy_avail_for_subcommit_amt,
+            fund_crcy_subcmmt_unsubobl_amt,
+            fund_crcy_obligation_amt,
+            fund_crcy_subcommitment_amt,
+            fund_crcy_subobligation_amt,
+            operating_unit,
+            agreement_status,
+            fund_crcy_avail_for_subobl_amt,
+            bfy_fund,
+            fund_crcy,
+            funding_office_code
+        ) |>
+        dplyr::mutate(
+            funding_year = stringr::str_extract(bfy_fund, "(?<=/)[0-9]{4}"),
+            funding_year = paste0("FY", funding_year)
+        ) |>
 
         #rename old program_areas to match the new
-        dplyr::left_join(blingr::data_program_element_map, by = c("program_element" = "old_program_element")) |>
+        dplyr::left_join(
+            blingr::data_program_element_map,
+            by = c("program_element" = "old_program_element")
+        ) |>
         dplyr::mutate(program_area = dplyr::if_else(is.na(new_program_area), program_area, new_program_area)) |>
         dplyr::select(-new_program_area) |>
 
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
-        dplyr::select(funding_office_code, document_number, actg_line, fund_crcy_avail_for_subcommit_amt,
-                      fund_crcy_subcmmt_unsubobl_amt, fund_crcy_obligation_amt,
-                      fund_crcy_subcommitment_amt, fund_crcy_subobligation_amt,
-                      funding_year, bfy_fund, program_area_name,fund_crcy_avail_for_subobl_amt,
-                      program_area, program_element_name, program_element, program_sub_element, operating_unit,
-                      distribution, fund_status, agreement_status, fund_fully_expired_year, fund_crcy,
-                      fund_cancelled_year) |>
+        dplyr::select(
+            funding_office_code,
+            document_number,
+            actg_line,
+            fund_crcy_avail_for_subcommit_amt,
+            fund_crcy_subcmmt_unsubobl_amt,
+            fund_crcy_obligation_amt,
+            fund_crcy_subcommitment_amt,
+            fund_crcy_subobligation_amt,
+            funding_year,
+            bfy_fund,
+            program_area_name,
+            fund_crcy_avail_for_subobl_amt,
+            program_area,
+            program_element_name,
+            program_element,
+            program_sub_element,
+            operating_unit,
+            distribution,
+            fund_status,
+            agreement_status,
+            fund_fully_expired_year,
+            fund_crcy,
+            fund_cancelled_year
+        ) |>
         dplyr::arrange(program_area) |>
         dplyr::rename(
             'Funding Office Code' = funding_office_code,
@@ -62,7 +103,6 @@ clean_phoenix_bi_oblg_acc_lines <- function(file){
             'Fund Status' = fund_status,
             'Fund Currency' = fund_crcy,
             'Fund Fully Expired Year' = fund_fully_expired_year,
-            'Fund Cancelled Year' = fund_cancelled_year) |>
-        tidyr::drop_na(Value)
+            'Fund Cancelled Year' = fund_cancelled_year
+        )
 }
-
