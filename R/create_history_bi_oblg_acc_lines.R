@@ -12,17 +12,19 @@
 #'  }
 
 create_history_bi_oblg_acc_lines <- function(file, is_pepfar) {
-
     # Read the file
     if (is_pepfar) {
-        temp <- readxl::read_xlsx(file, skip = 10)
+        temp_read <- readxl::read_xlsx(file, skip = 10)
+
     } else {
-        temp <- readxl::read_xlsx(file)
+        temp_read <- readxl::read_xlsx(file)
     }
 
-    temp <- temp |>
+    temp <- temp_read |>
         dplyr::select(-dplyr::starts_with("...")) |>  # Remove auto-generated column names
-        tidyr::drop_na("Document Number") |>
+        dplyr::filter(!is.na(`Document Number`),
+                      `Document Number` != "",
+                      `Document Number` != "Comments") |>
 
         dplyr::mutate(
             filename = basename(file),
@@ -38,13 +40,34 @@ create_history_bi_oblg_acc_lines <- function(file, is_pepfar) {
     num_cols <- ncol(temp)
 
     # Convert all columns from 16th onwards to numeric using all_of()
-    temp <- temp |>
+    temp_all <- temp |>
         dplyr::mutate(dplyr::across(25:num_cols, as.numeric)) |>
 
         # Pivoting data to long format
-        tidyr::pivot_longer(cols = -dplyr::all_of(1:24), names_to = "Mechanism", values_to = "Value") |>
+        tidyr::pivot_longer(
+            cols = -dplyr::all_of(1:24),
+            names_to = "Mechanism",
+            values_to = "Value"
+        ) |>
         dplyr::mutate(Value = as.numeric(Value)) |>
         tidyr::drop_na(Value)
 
-    return(temp)
+
+    #add comments
+    temp_comments <- temp_read |>
+        dplyr::filter(`Document Number` == "Comments") |>
+        dplyr::select(-c(1:23)) |>
+        dplyr::mutate(dplyr::across(dplyr::everything(), as.character)) |>
+        tidyr::pivot_longer(cols = dplyr::everything(),
+                     names_to = "Mechanism",
+                     values_to = "Comments")
+
+
+    temp_all <- temp_all |>
+        dplyr::left_join(temp_comments, by = c("Mechanism"))
+
+
+    return(temp_all)
 }
+
+
