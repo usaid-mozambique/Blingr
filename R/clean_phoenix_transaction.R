@@ -85,7 +85,7 @@ clean_phoenix_transaction <- function(file,
                 lubridate::quarter(fiscal_transaction_date)
             )
         ) |>
-        dplyr::group_by(award_number, period, program_area, transaction_date) |>
+        dplyr::group_by(award_number, period, program_area, transaction_date, program_area_name) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop") |>
 
         tidyr::separate(
@@ -102,7 +102,8 @@ clean_phoenix_transaction <- function(file,
                         quarter,
                         period,
                         transaction_date,
-                        program_area) |>
+                        program_area,
+                        program_area_name) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop")
 
 
