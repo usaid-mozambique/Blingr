@@ -29,5 +29,5 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "cmmt_amt_between_31_to_90_days", "cmmt_amt_between_91_to_180_days", "cmmt_amt_above_180_days",
                          "period", "Period", "Actg Line", "Fund Fully Expired Year", "Fund Cancelled Year", "Total",
                          "Value", "program_element_name", "fund_crcy_obligation_amt", "fund_crcy_subcommitment_amt",
-                         "fund_crcy_subobligation_amt", "agreement_status", "fund_crcy", "Document Number"
+                         "fund_crcy_subobligation_amt", "agreement_status", "fund_crcy", "Document Number", "comments"
                          ))
