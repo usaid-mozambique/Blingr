@@ -4,18 +4,16 @@
 \alias{clean_phoenix_transaction}
 \title{Process phoenix transaction dataset}
 \usage{
-clean_phoenix_transaction(
-  PHOENIX_TRANSACTION_PATH,
-  all_award_number,
-  distribution_filter
-)
+clean_phoenix_transaction(file, all_award_number, distribution_filter, freq)
 }
 \arguments{
-\item{PHOENIX_TRANSACTION_PATH}{folder path to phoneix transaction datasets}
+\item{file}{path to the file containing the raw data}
 
 \item{all_award_number}{all award numbers of interest}
 
 \item{distribution_filter}{distriction to be included}
+
+\item{freq}{frequency of the data - two options: month or quarter}
 }
 \value{
 cleaned phoenix transaction dataset
@@ -26,6 +24,6 @@ Process phoenix transaction dataset
 \examples{
 \dontrun{
  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
-  distribution_filter)
+  distribution_filter, monthly)
  }
 }

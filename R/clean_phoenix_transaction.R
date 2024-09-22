@@ -1,8 +1,9 @@
 #' Process phoenix transaction dataset
 #'
-#' @param PHOENIX_TRANSACTION_PATH folder path to phoneix transaction datasets
 #' @param all_award_number all award numbers of interest
 #' @param distribution_filter distriction to be included
+#' @param file path to the file containing the raw data
+#' @param freq frequency of the data - two options: month or quarter
 #'
 #' @return cleaned phoenix transaction dataset
 #' @export
@@ -10,13 +11,16 @@
 #' @examples
 #' \dontrun{
 #'  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
-#'   distribution_filter)
+#'   distribution_filter, monthly)
 #'  }
 
 
-clean_phoenix_transaction <- function(PHOENIX_TRANSACTION_PATH, all_award_number, distribution_filter){
+clean_phoenix_transaction <- function(file, all_award_number, distribution_filter, freq){
 
-    temp <- readxl::read_xlsx(PHOENIX_TRANSACTION_PATH,
+
+    frequency <- ifelse(freq == "month", 1, 3)
+
+    temp <- readxl::read_xlsx(file,
                               col_types = "text") |>
         janitor::clean_names() |>
         dplyr::select(award_number, document_number, obl_document_number,
@@ -27,21 +31,7 @@ clean_phoenix_transaction <- function(PHOENIX_TRANSACTION_PATH, all_award_number
         dplyr::mutate(
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
-            transaction_date = lubridate::floor_date(transaction_date, unit = "quarter"),
-            #  count = nrows(PHOENIX_TRANSACTION_PATH),
-            program_area = dplyr::case_when(program_element == "A047" ~ "HL.1",
-                                     program_element == "A048" ~ "HL.2",
-                                     program_element == "A049" ~ "HL.3",
-                                     program_element == "A050" ~ "HL.4",
-                                     program_element == "A051" ~ "HL.5",
-                                     program_element == "A052" ~ "HL.6",
-                                     program_element == "A053" ~ "HL.7",
-                                     program_element == "A054" ~ "HL.8",
-                                     program_element == "A142" ~ "HL.9",
-                                     program_element == "A141" ~ "PO.2",
-                                     program_element == "A140" ~ "PO.1",
-                                     TRUE ~ program_area),
-
+            transaction_date = lubridate::floor_date(transaction_date, unit = freq),
             award_number = dplyr::case_when(
                 award_number %in% active_award_number ~ award_number,
                 document_number %in% active_award_number ~ document_number,
@@ -51,23 +41,21 @@ clean_phoenix_transaction <- function(PHOENIX_TRANSACTION_PATH, all_award_number
             transaction_obligation = dplyr::case_when(transaction_event_type == "OBLG_SUBOB" ~ transaction_amt,
                                                transaction_event_type == "OBLG_UNI" ~ transaction_amt,
                                                .default = NA_real_),
-            avg_monthly_exp_rate = transaction_disbursement/3
+            avg_monthly_exp_rate = transaction_disbursement/frequency
         ) |>
+        #rename old program_areas to match the new
+        dplyr::left_join(blingr::data_program_element_map, by = c("program_element" = "old_program_element")) |>
+        dplyr::mutate(program_area = dplyr::if_else(is.na(new_program_area), program_area, new_program_area)) |>
+        dplyr::select(-new_program_area) |>
+
+        #add program area names
+        dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
+
+
         dplyr::filter(award_number %in% active_award_number) |>
         dplyr::select(-c(program_element, transaction_event_type, transaction_event,
                   document_number, obl_document_number
         )) |>
-
-        #create at month level and add a mutate column with a 1.
-
-        #    temp_2 <- temp |>
-        #      select(award_number, transaction_date, transaction_disbursement) |>
-        #      drop_na(transaction_disbursement) |>
-        #      filter(transaction_disbursement != 0) |>
-        #      mutate(month_level = transaction_date %m+% months(3),
-        #             count = 1) |>
-        #      group_by(award_number, month_level) |>
-
 
         dplyr::mutate(fiscal_transaction_date = lubridate::`%m+%`(transaction_date, months(3)),
                period = paste0("FY", lubridate::year(fiscal_transaction_date) %% 100,
