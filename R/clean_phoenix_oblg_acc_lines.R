@@ -70,9 +70,7 @@ clean_phoenix_oblg_acc_lines <- function(file,
                 document_number,
                 obligation_type,
                 distribution,
-                document_date,
-                new_program_area,
-                program_element
+                new_program_area
             )
         ) |>
 
