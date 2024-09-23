@@ -79,7 +79,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
                         fund_status,
                         program_area_name,
                         program_element,
-                        program_element_name,
                         period) |>
         dplyr::summarise(dplyr::across(dplyr::everything(), ~ sum(.x, na.rm = TRUE)), .groups = "drop")
 
