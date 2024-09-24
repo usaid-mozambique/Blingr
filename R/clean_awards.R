@@ -1,6 +1,7 @@
 #' Create a clean dataset from Active Awards google sheet (template from USAID Mozambique)
 #'
-#' @param ACTIVE_AWARDS_PATH Path to the Active Awards excel sheet
+#' @param sheetname name of the sheet.  Either Active Awards or Expired Awards
+#' @param file filename
 #'
 #' @return A clean dataset with the following columns:sub_sector, activity_name, award_number, total_estimated_cost,
 #'start_date, end_date, u_s_org_local, aor_cor_or_activity_manager,
@@ -9,18 +10,18 @@
 #'
 #' @examples
 #' \dontrun{
-#'  df <- clean_ctive_awards("path/to/Active Awards.xlsx")
+#'  df <- clean_ctive_awards("path/to/Active Awards.xlsx", "Active Awards")
 #'  }
-clean_active_awards <- function(ACTIVE_AWARDS_PATH){
+clean_awards <- function(file, sheetname){
 
 
-    temp <- readxl::read_xlsx(ACTIVE_AWARDS_PATH,
-                              sheet = "Active Awards",
+    temp <- readxl::read_xlsx(file,
+                              sheet = sheetname,
                               skip = 1) |>
         janitor::clean_names() |>
         dplyr::filter(sector == "IHO") |>
         dplyr::mutate(award_number = stringr::str_trim(award_number),
-                      filename = basename(ACTIVE_AWARDS_PATH),
+                      filename = basename(file),
                       period = stringr::str_extract(filename, "^[^_]+"),
                       sub_sector = dplyr::recode(sub_sector, "AFG" = "HTHS",
                                                  "PCMD" = "Family Health",
