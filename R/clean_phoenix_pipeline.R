@@ -39,24 +39,26 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
                       undisbursed_amt = as.numeric(undisbursed_amt),
                       last_qtr_accrual_amt = as.numeric(last_qtr_accrual_amt),
                       pipeline_amt = as.numeric(pipeline_amt),
-                      program_area = dplyr::case_when(program_element == "A047" ~ "HL.1",
-                                                      program_element == "A048"~ "HL.2",
-                                                      program_element == "A049"~ "HL.3",
-                                                      program_element == "A050"~ "HL.4",
-                                                      program_element == "A051"~ "HL.5",
-                                                      program_element == "A052"~ "HL.6",
-                                                      program_element == "A053"~ "HL.7",
-                                                      program_element == "A054"~ "HL.8",
-                                                      program_element == "A142"~ "HL.9",
-                                                      program_element == "A141"~ "PO.2",
-                                                      program_element == "A140"~ "PO.1",
-                                                      TRUE ~ program_area),
                       award_number = dplyr::case_when(
                           award_number %in% all_award_number ~ award_number,
                           TRUE ~ document_number) ,
                       total_disbursement_outlays = disbursement_amt + last_qtr_accrual_amt
-
         ) |>
+
+        # update program elements to new coding
+        dplyr::left_join(
+            blingr::data_program_element_map,
+            by = c("program_element" = "old_program_element")
+        ) |>
+
+        # update program areas to new coding
+        dplyr::mutate(program_area = dplyr::case_when(
+            !is.na(new_program_area) ~ new_program_area,
+            TRUE ~ program_area
+        )) |>
+        dplyr::select(-new_program_area) |>
+
+        # update program area
 
         dplyr::filter(award_number %in% all_award_number) |>
         dplyr::group_by(award_number, period, program_area, bilateral_obl_number) |>
@@ -64,4 +66,7 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
 
     return(temp)
 }
+
+
+
 

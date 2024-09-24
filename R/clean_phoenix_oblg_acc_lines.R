@@ -67,6 +67,8 @@ clean_phoenix_oblg_acc_lines <- function(file,
 
         # add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
+
+        #remove columns
         dplyr::select(
             -c(
                 document_number,
