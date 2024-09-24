@@ -15,9 +15,11 @@
 #'  }
 
 clean_phoenix_oblg_acc_lines <- function(file,
-                                         award_numbers,
-                                         OBLIGATION_TYPE_FILTER,
-                                         DISTRIBUTION_FILTER) {
+                                              award_numbers,
+                                              OBLIGATION_TYPE_FILTER,
+                                              DISTRIBUTION_FILTER) {
+
+
     temp <- suppressWarnings(readxl::read_xlsx(file)) |>
         janitor::clean_names() |>
         dplyr::select(
@@ -70,7 +72,8 @@ clean_phoenix_oblg_acc_lines <- function(file,
                 document_number,
                 obligation_type,
                 distribution,
-                new_program_area
+                new_program_area,
+                filename
             )
         ) |>
 
