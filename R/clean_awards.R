@@ -31,10 +31,11 @@ clean_awards <- function(file, sheetname){
         ) |>
         dplyr::mutate_if(is.numeric, ~replace_na(., 0)
         ) |>
-        dplyr::select(sub_sector, activity_name, award_number, total_estimated_cost,
+        dplyr::select(dplyr::any_of(c(sub_sector, activity_name, award_number, total_estimated_cost,
                       start_date, end_date, u_s_org_local, aor_cor_or_activity_manager,
-                      period, funding_type, pepfar_funding) |>
+                      period, funding_type, pepfar_funding))) |>
         tidyr::drop_na(award_number)
 
     return(temp)
 }
+
