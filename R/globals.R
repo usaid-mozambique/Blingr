@@ -30,5 +30,5 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "period", "Period", "Actg Line", "Fund Fully Expired Year", "Fund Cancelled Year", "Total",
                          "Value", "program_element_name", "fund_crcy_obligation_amt", "fund_crcy_subcommitment_amt",
                          "fund_crcy_subobligation_amt", "agreement_status", "fund_crcy", "Document Number", "comments",
-                         "to_be_deobligated", "status"
+                         "to_be_deobligated", "status", 'Program Area', 'Program Element','Program Sub-Element'
                          ))
