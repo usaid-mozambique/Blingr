@@ -24,6 +24,9 @@ create_history_open_commitments <- function(file) {
                        outstanding_days_of_cmmt = as.numeric(period - original_date)
         ) |>
         dplyr::select(period, dplyr::everything())
+        dplyr::select(-dplyr::any_of(c("cmmt_less_than_30_days", "cmmt_amt_between_31_to_90_days",
+                                "cmmt_amt_between_91_to_180_days", "cmmt_amt_above_180_days")))  #error handling if a column exists
 
     return(temp)
 }
+
