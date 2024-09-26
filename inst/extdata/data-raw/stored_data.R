@@ -46,8 +46,6 @@ usethis::use_data(data_program_element_map, overwrite = TRUE)
 data_program_element_name_map <-
     tibble::tribble(
     ~program_element,                                         ~program_element_name,
-        "6560080.00",                                                  "6560080.00",
-        "6560090.00",                                                  "6560090.00",
               "A047",                                                    "HIV/AIDS",
               "A048",                                                "Tuberculosis",
               "A049",                                                     "Malaria",
