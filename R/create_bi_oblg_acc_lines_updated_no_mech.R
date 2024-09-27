@@ -16,7 +16,7 @@ create_bi_oblg_acc_lines_updated_no_mech <- function(file, is_pepfar) {
     temp <- blingr::create_bi_oblg_acc_lines_updated_all(file, is_pepfar)
 
     temp <- temp |>
-        dplyr::select(1:24) |>
+        dplyr::select(1:21) |>
         dplyr::filter(!is.na(`Document Number`),
                       `Document Number` != "",
                       `Document Number` != "Comments")

@@ -21,8 +21,8 @@ create_bi_oblg_acc_lines_updated_mech <- function(file, is_pepfar) {
     #make them numeric
     temp_mech <- temp |>
         dplyr::filter( `Document Number` != "Comments") |>  #remove comments line
-        dplyr::mutate(dplyr::across(25:num_cols, as.numeric)) |>
-        dplyr::select(Period, `Document Number`,`Program Area`, `Program Element`, `Program Sub-Element`,25:num_cols) |>
+        dplyr::mutate(dplyr::across(22:num_cols, as.numeric)) |>
+        dplyr::select(Period, `Document Number`,`Program Area`, `Program Element`, `Program Sub-Element`,22:num_cols) |>
         tidyr::pivot_longer(cols = -c(1:5), names_to = "Mechanism", values_to = "Value") |>
         tidyr::drop_na(Value)
 
@@ -30,7 +30,7 @@ create_bi_oblg_acc_lines_updated_mech <- function(file, is_pepfar) {
     #add comments
     temp_comments <- temp |>
         dplyr::filter(`Document Number` == "Comments") |>
-        dplyr::select(25:num_cols) |>
+        dplyr::select(22:num_cols) |>
         dplyr::mutate(dplyr::across(dplyr::everything(), as.character)) |>
         tidyr::pivot_longer(cols = dplyr::everything(),
                             names_to = "Mechanism",
