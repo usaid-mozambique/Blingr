@@ -94,7 +94,7 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
             'Agreement Status' = agreement_status,
             'Fund Status' = fund_status,
             'Fund Fully Expired Year' = fund_fully_expired_year,
-            'Fund Cancelled Year' = fund_cancelled_year
+            'Fund Cancelled Year' = fund_cancelled_year,
             'Funding Office Code' = funding_office_code
         )
 }
