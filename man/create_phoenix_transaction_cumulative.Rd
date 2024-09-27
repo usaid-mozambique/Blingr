@@ -4,10 +4,15 @@
 \alias{create_phoenix_transaction_cumulative}
 \title{Create cumulative totals to the complete transaction dataset}
 \usage{
-create_phoenix_transaction_cumulative(phoenix_transaction_df)
+create_phoenix_transaction_cumulative(
+  phoenix_transaction_df,
+  calendar_type = "fiscal"
+)
 }
 \arguments{
 \item{phoenix_transaction_df}{cleaned phoenix transaction dataset}
+
+\item{calendar_type}{calendar type to be used either fiscal or calendar}
 }
 \value{
 a complete transaction dataset with cumulative totals
@@ -17,6 +22,6 @@ Create cumulative totals to the complete transaction dataset
 }
 \examples{
 \dontrun{
- df <- create_phoenix_transaction_cumulative(transaction_df)
+ df <- create_phoenix_transaction_cumulative(transaction_df, fiscal)
  }
 }

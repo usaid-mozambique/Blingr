@@ -43,6 +43,7 @@ clean_phoenix_transaction <- function(file,
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
             transaction_date = lubridate::floor_date(transaction_date, unit = freq),
+            calendar_year = lubridate::year(transaction_date),
             award_number = dplyr::case_when(
                 award_number %in% active_award_number ~ award_number,
                 document_number %in% active_award_number ~ document_number,
