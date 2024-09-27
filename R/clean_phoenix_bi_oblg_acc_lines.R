@@ -31,13 +31,10 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
             fund_crcy_avail_for_subcommit_amt,
             fund_crcy_subcmmt_unsubobl_amt,
             fund_crcy_obligation_amt,
-            fund_crcy_subcommitment_amt,
-            fund_crcy_subobligation_amt,
+            fund_crcy_avail_for_subobl_amt,
             operating_unit,
             agreement_status,
-            fund_crcy_avail_for_subobl_amt,
             bfy_fund,
-            fund_crcy,
             funding_office_code
         ) |>
         dplyr::mutate(
@@ -56,18 +53,16 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
         dplyr::select(
-            funding_office_code,
             document_number,
+            funding_office_code,
             actg_line,
             fund_crcy_avail_for_subcommit_amt,
             fund_crcy_subcmmt_unsubobl_amt,
             fund_crcy_obligation_amt,
-            fund_crcy_subcommitment_amt,
-            fund_crcy_subobligation_amt,
+            fund_crcy_avail_for_subobl_amt,
             funding_year,
             bfy_fund,
             program_area_name,
-            fund_crcy_avail_for_subobl_amt,
             program_area,
             program_element_name,
             program_element,
@@ -77,18 +72,16 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
             fund_status,
             agreement_status,
             fund_fully_expired_year,
-            fund_crcy,
             fund_cancelled_year
         ) |>
         dplyr::arrange(program_area) |>
         dplyr::rename(
-            'Funding Office Code' = funding_office_code,
             'Document Number' = document_number,
+            'Funding Office Code' = funding_office_code,
             'Actg Line' = actg_line,
             'Avail for Subcommit Amt' = fund_crcy_avail_for_subcommit_amt,
             'Subcmmt Unsubobl Amt' = fund_crcy_subcmmt_unsubobl_amt,
             'Obligation Amt' = fund_crcy_obligation_amt,
-            'Subcommitment Amt' = fund_crcy_subcommitment_amt,
             'Avail for Subobl Amt' = fund_crcy_avail_for_subobl_amt,
             'Funding Year' = funding_year,
             'BFY/Fund' = bfy_fund,
