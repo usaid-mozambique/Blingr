@@ -54,7 +54,6 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
         dplyr::select(
             document_number,
-            funding_office_code,
             actg_line,
             fund_crcy_avail_for_subcommit_amt,
             fund_crcy_subcmmt_unsubobl_amt,
@@ -72,12 +71,12 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
             fund_status,
             agreement_status,
             fund_fully_expired_year,
-            fund_cancelled_year
+            fund_cancelled_year,
+            funding_office_code,
         ) |>
         dplyr::arrange(program_area) |>
         dplyr::rename(
             'Document Number' = document_number,
-            'Funding Office Code' = funding_office_code,
             'Actg Line' = actg_line,
             'Avail for Subcommit Amt' = fund_crcy_avail_for_subcommit_amt,
             'Subcmmt Unsubobl Amt' = fund_crcy_subcmmt_unsubobl_amt,
@@ -94,8 +93,8 @@ clean_phoenix_bi_oblg_acc_lines <- function(file) {
             'Operating Unit' = operating_unit,
             'Agreement Status' = agreement_status,
             'Fund Status' = fund_status,
-            'Fund Currency' = fund_crcy,
             'Fund Fully Expired Year' = fund_fully_expired_year,
             'Fund Cancelled Year' = fund_cancelled_year
+            'Funding Office Code' = funding_office_code
         )
 }
