@@ -4,7 +4,12 @@
 \alias{clean_phoenix_transaction}
 \title{Process phoenix transaction dataset}
 \usage{
-clean_phoenix_transaction(file, active_award_number, distribution_filter)
+clean_phoenix_transaction(
+  file,
+  active_award_number,
+  distribution_filter,
+  frequency = "quarter"
+)
 }
 \arguments{
 \item{file}{path to the file containing the raw data}
@@ -12,6 +17,8 @@ clean_phoenix_transaction(file, active_award_number, distribution_filter)
 \item{active_award_number}{active award numbers}
 
 \item{distribution_filter}{distriction to be included}
+
+\item{frequency}{frequency of the data either quarter or month}
 }
 \value{
 cleaned phoenix transaction dataset
@@ -22,6 +29,6 @@ Process phoenix transaction dataset
 \examples{
 \dontrun{
  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
-  distribution_filter)
+  distribution_filter, frequency = "quarter")
  }
 }
