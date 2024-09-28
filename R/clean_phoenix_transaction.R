@@ -3,7 +3,6 @@
 #' @param distribution_filter distriction to be included
 #' @param file path to the file containing the raw data
 #' @param active_award_number active award numbers
-#' @param frequency frequency of the data either quarter or month
 #'
 #' @return cleaned phoenix transaction dataset
 #' @export
@@ -11,17 +10,13 @@
 #' @examples
 #' \dontrun{
 #'  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
-#'   distribution_filter, frequency = "quarter")
+#'   distribution_filter)
 #'  }
 
 
 clean_phoenix_transaction <- function(file,
                                       active_award_number,
-                                      distribution_filter,
-                                      frequency = "quarter"){
-
-    freq <- frequency
-    freq_num <- ifelse(freq == "quarter", 3, 1)
+                                      distribution_filter){
 
 
     temp <- readxl::read_xlsx(file, col_types = "text") |>
@@ -42,7 +37,7 @@ clean_phoenix_transaction <- function(file,
         dplyr::mutate(
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
-            transaction_date = lubridate::floor_date(transaction_date, unit = freq),
+            transaction_date = lubridate::floor_date(transaction_date, "quarter"),
             award_number = dplyr::case_when(
                 award_number %in% active_award_number ~ award_number,
                 document_number %in% active_award_number ~ document_number,
@@ -54,7 +49,7 @@ clean_phoenix_transaction <- function(file,
                 transaction_event_type == "OBLG_UNI" ~ transaction_amt,
                 .default = NA_real_
             ),
-            avg_monthly_exp_rate = transaction_disbursement / freq_num  # get monthly average
+            avg_monthly_exp_rate = transaction_disbursement / 3  # get monthly average
         ) |>
         #rename old program_areas to match the new
         dplyr::left_join(
