@@ -14,18 +14,13 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
 
     # Step 1: Summarize numeric columns grouped by relevant keys
     temp <- phoenix_transaction_df |>
-        dplyr::group_by(award_number, program_area, fiscal_year) |>
+        dplyr::group_by(award_number, period, program_area, fiscal_year) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~sum(., na.rm = TRUE)), .groups = "drop")
-
-    # Check if `transaction_disbursement` exists
-    if (!"transaction_disbursement" %in% colnames(phoenix_transaction_df)) {
-        stop("Column `transaction_disbursement` doesn't exist in the input dataframe.")
-    }
 
     # Step 2: Calculate cumulative transaction disbursement per fiscal year
     phoenix_transaction_disbursement_fy <- phoenix_transaction_df |>
-        dplyr::select(award_number, fiscal_year, program_area, transaction_disbursement) |>
-        dplyr::arrange(award_number, fiscal_year)  |>
+        dplyr::select(award_number, fiscal_year, program_area, transaction_disbursement, period) |>
+        dplyr::arrange(award_number, fiscal_year, period)  |>
         dplyr::group_by(award_number, fiscal_year, program_area) |>
         dplyr::mutate(cumulative_transaction_disbursement_fy = cumsum(transaction_disbursement)) |>
         dplyr::ungroup()
