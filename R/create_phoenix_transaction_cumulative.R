@@ -28,7 +28,7 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
     # Step 3: Merge cumulative disbursement data back into the summary
     temp <- temp |>
         dplyr::left_join(phoenix_transaction_disbursement_fy,
-                         by = c("award_number", "program_area", "fiscal_year"),
+                         by = c("award_number", "program_area", "fiscal_year", "period"),
                          suffix = c("", ".y")) |>
         dplyr::select(-transaction_disbursement.y)  # Remove this column after merging
 
