@@ -26,8 +26,7 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
         dplyr::select(-c(fiscal_year, transaction_disbursement))
 
     temp <- phoenix_transaction_df |>
-        dplyr::left_join(phoenix_transaction_disbursement_fy, by = c("award_number", "period", "program_area")) |>
-        dplyr::select(-c(fiscal_year))
+        dplyr::left_join(phoenix_transaction_disbursement_fy, by = c("award_number", "period", "program_area"))
 
     return(temp)
 }
