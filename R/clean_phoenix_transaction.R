@@ -22,8 +22,6 @@ clean_phoenix_transaction <- function(file,
     temp <- readxl::read_xlsx(file, col_types = "text") |>
         janitor::clean_names() |>
         dplyr::select(
-            award_number,
-            document_number,
             obl_document_number,
             transaction_date,
             transaction_amt,
@@ -61,9 +59,7 @@ clean_phoenix_transaction <- function(file,
             -c(
                 program_element,
                 transaction_event_type,
-                transaction_event,
-                document_number,
-                obl_document_number
+                transaction_event
             )
         ) |>
 
@@ -77,7 +73,7 @@ clean_phoenix_transaction <- function(file,
             )
         ) |>
         dplyr::rename(award_number = obl_document_number) |>
-        dplyr::group_by(award_number, period, program_area, transaction_date, program_area_name) |>
+        dplyr::group_by(award_number, period, program_area, program_area_name) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop") |>
 
         tidyr::separate(
@@ -93,7 +89,6 @@ clean_phoenix_transaction <- function(file,
                         fiscal_year,
                         quarter,
                         period,
-                        transaction_date,
                         program_area,
                         program_area_name) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop")
