@@ -4,12 +4,12 @@
 \alias{clean_phoenix_transaction}
 \title{Process phoenix transaction dataset}
 \usage{
-clean_phoenix_transaction(file, active_award_number, distribution_filter)
+clean_phoenix_transaction(file, all_award_number, distribution_filter)
 }
 \arguments{
 \item{file}{path to the file containing the raw data}
 
-\item{active_award_number}{active award numbers}
+\item{all_award_number}{all relevant award numbers}
 
 \item{distribution_filter}{distriction to be included}
 }
@@ -21,7 +21,7 @@ Process phoenix transaction dataset
 }
 \examples{
 \dontrun{
- df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
+ df <- clean_phoenix_transaction(phoenix_transaction_path, award_number,
   distribution_filter)
  }
 }

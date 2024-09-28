@@ -2,20 +2,20 @@
 #'
 #' @param distribution_filter distriction to be included
 #' @param file path to the file containing the raw data
-#' @param active_award_number active award numbers
+#' @param all_award_number all relevant award numbers
 #'
 #' @return cleaned phoenix transaction dataset
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'  df <- clean_phoenix_transaction(phoenix_trnsaction_path, award_number,
+#'  df <- clean_phoenix_transaction(phoenix_transaction_path, award_number,
 #'   distribution_filter)
 #'  }
 
 
 clean_phoenix_transaction <- function(file,
-                                      active_award_number,
+                                      all_award_number,
                                       distribution_filter){
 
 
@@ -33,16 +33,12 @@ clean_phoenix_transaction <- function(file,
             distribution,
             program_area
         ) |>
-        dplyr::filter(distribution %in% distribution_filter) |>
+        dplyr::filter(distribution %in% distribution_filter,
+                      obl_document_number %in% all_award_number) |>
         dplyr::mutate(
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
             transaction_date = lubridate::floor_date(transaction_date, "quarter"),
-            award_number = dplyr::case_when(
-                award_number %in% active_award_number ~ award_number,
-                document_number %in% active_award_number ~ document_number,
-                TRUE ~ obl_document_number
-            ),
             transaction_disbursement = dplyr::case_when(transaction_event == "DISB" ~ transaction_amt, .default = NA_real_),
             transaction_obligation = dplyr::case_when(
                 transaction_event_type == "OBLG_SUBOB" ~ transaction_amt,
@@ -61,9 +57,6 @@ clean_phoenix_transaction <- function(file,
 
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
-
-
-        dplyr::filter(award_number %in% active_award_number) |>
         dplyr::select(
             -c(
                 program_element,
@@ -83,6 +76,7 @@ clean_phoenix_transaction <- function(file,
                 lubridate::quarter(fiscal_transaction_date)
             )
         ) |>
+        dplyr::rename(award_number = obl_document_number) |>
         dplyr::group_by(award_number, period, program_area, transaction_date, program_area_name) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop") |>
 
