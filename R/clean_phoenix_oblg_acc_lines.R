@@ -72,6 +72,7 @@ clean_phoenix_oblg_acc_lines <- function(file,
         dplyr::select(
             -c(
                 document_number,
+                program_element,
                 obligation_type,
                 distribution,
                 new_program_area,
@@ -83,7 +84,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
                         program_area,
                         fund_status,
                         program_area_name,
-                        program_element,
                         period) |>
         dplyr::summarise(dplyr::across(dplyr::everything(), ~ sum(.x, na.rm = TRUE)), .groups = "drop")
 
