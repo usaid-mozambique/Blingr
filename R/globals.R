@@ -31,5 +31,5 @@ utils::globalVariables(c("sector", "award_number", "filename", "sub_sector",
                          "Value", "program_element_name", "fund_crcy_obligation_amt", "fund_crcy_subcommitment_amt",
                          "fund_crcy_subobligation_amt", "agreement_status", "fund_crcy", "Document Number", "comments",
                          "to_be_deobligated", "status", 'Program Area', 'Program Element','Program Sub-Element',
-                         "transaction_disbursement.y", "fiscal_quarter", "transaction_date_month"
+                         "transaction_disbursement.y", "fiscal_quarter", "transaction_date_month", "transaction_date_quarter"
                          ))

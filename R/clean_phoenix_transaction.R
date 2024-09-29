@@ -35,7 +35,7 @@ clean_phoenix_transaction <- function(file,
         dplyr::mutate(
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
-            transaction_date = lubridate::floor_date(transaction_date, "quarter"),
+            transaction_date_quarter = lubridate::floor_date(transaction_date, "quarter"),
             transaction_date_month = lubridate::floor_date(transaction_date, "month"),
             transaction_disbursement = dplyr::case_when(transaction_event == "DISB" ~ transaction_amt, .default = NA_real_),
             transaction_obligation = dplyr::case_when(
@@ -64,7 +64,7 @@ clean_phoenix_transaction <- function(file,
         ) |>
 
         dplyr::mutate(
-            fiscal_transaction_date = lubridate::`%m+%`(transaction_date, months(3)),
+            fiscal_transaction_date = lubridate::`%m+%`(transaction_date_quarter, months(3)),
             period = paste0(
                 "FY",
                 lubridate::year(fiscal_transaction_date) %% 100,
