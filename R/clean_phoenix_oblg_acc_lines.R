@@ -31,7 +31,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
             disbursement_amt,
             unliquidated_amt,
             outstanding_advance_amt,
-            fund_status,
             distribution,
             program_element
         ) |>
@@ -82,7 +81,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
 
         dplyr::group_by(award_number,
                         program_area,
-                        fund_status,
                         program_area_name,
                         period) |>
         dplyr::summarise(dplyr::across(dplyr::everything(), ~ sum(.x, na.rm = TRUE)), .groups = "drop")
