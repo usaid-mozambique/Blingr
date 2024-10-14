@@ -44,17 +44,6 @@ clean_subobligation_summary <- function(SUBOBLIGATION_SUMMARY_PATH) {
         dplyr::mutate_if(is.numeric, ~ replace_na(., 0)) |>
         dplyr::select(-c(program_area_name))
 
-    temp_comments <- temp |>
-        dplyr::select(award_number, period, comments) |>
-        tidyr::drop_na(comments) |>
-        dplyr::distinct()
-
-    temp <- temp |>
-        dplyr::select(-comments) |>
-        dplyr::left_join(temp_comments, by = c("award_number", "period"))
-
-
-
     return(temp)
 }
 
