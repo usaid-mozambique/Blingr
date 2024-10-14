@@ -41,8 +41,7 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
                       pipeline_amt = as.numeric(pipeline_amt),
                       award_number = dplyr::case_when(
                           award_number %in% all_award_number ~ award_number,
-                          TRUE ~ document_number) ,
-                      total_disbursement_outlays = disbursement_amt + last_qtr_accrual_amt
+                          TRUE ~ document_number)
         ) |>
 
         # update program elements to new coding

@@ -32,7 +32,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
             unliquidated_amt,
             outstanding_advance_amt,
             distribution,
-            program_element
         ) |>
         dplyr::mutate(
             award_number = dplyr::case_when(
@@ -71,7 +70,6 @@ clean_phoenix_oblg_acc_lines <- function(file,
         dplyr::select(
             -c(
                 document_number,
-                program_element,
                 obligation_type,
                 distribution,
                 new_program_area,
