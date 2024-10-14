@@ -20,7 +20,7 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
             transaction_disbursement_cumulative = cumsum(transaction_disbursement)  # Calculate cumulative sum within the year
         )  |>
         dplyr::ungroup() |>
-        dplyr::select(-c(fiscal_year, fiscal_quarter, transaction_disbursement))
+        dplyr::select(-c(fiscal_year, fiscal_quarter))
 
     return(temp)
 }

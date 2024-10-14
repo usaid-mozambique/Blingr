@@ -22,6 +22,7 @@ clean_phoenix_transaction <- function(file,
         janitor::clean_names() |>
         dplyr::select(
             obl_document_number,
+            program_element,
             transaction_date,
             transaction_amt,
             transaction_event,
@@ -42,7 +43,7 @@ clean_phoenix_transaction <- function(file,
             by = c("program_element" = "old_program_element")
         ) |>
         dplyr::mutate(program_area = dplyr::if_else(is.na(new_program_area), program_area, new_program_area)) |>
-        dplyr::select(-new_program_area) |>
+        dplyr::select(-c(program_element,new_program_area)) |>
 
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
