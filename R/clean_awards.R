@@ -19,7 +19,6 @@ clean_awards <- function(file, sheetname){
                               sheet = sheetname,
                               skip = 1) |>
         janitor::clean_names() |>
-        dplyr::filter(sector == "IHO") |>
         dplyr::mutate(award_number = stringr::str_trim(award_number),
                       filename = basename(file),
                       period = stringr::str_extract(filename, "^[^_]+"),
