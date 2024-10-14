@@ -28,7 +28,7 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
         dplyr::select(document_amt,
                       obligation_amt, subobligation_amt, disbursement_amt,
                       undisbursed_amt, last_qtr_accrual_amt,document_number,
-                      program_area, award_number, program_element,pipeline_amt,
+                      program_area, award_number, program_element, pipeline_amt,
                       bilateral_obl_number
         ) |>
 
