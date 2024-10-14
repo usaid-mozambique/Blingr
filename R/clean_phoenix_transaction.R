@@ -37,17 +37,22 @@ clean_phoenix_transaction <- function(file,
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
             transaction_date_quarter = lubridate::floor_date(transaction_date, "quarter")
         ) |>
+
+
+        dplyr::rename(award_number = obl_document_number,
+                      transaction_disbursement = transaction_amt) |>
+        dplyr::select(-c(transaction_event, distribution)) |>
         #rename old program_areas to match the new
         dplyr::left_join(
             blingr::data_program_element_map,
             by = c("program_element" = "old_program_element")
         ) |>
         dplyr::mutate(program_area = dplyr::if_else(is.na(new_program_area), program_area, new_program_area)) |>
-        dplyr::select(-c(program_element,new_program_area)) |>
+        dplyr::select(-c(program_element, new_program_area)) |>
 
         #add program area names
         dplyr::left_join(blingr::data_program_area_name_map, by = "program_area") |>
-        dplyr::select(-c(transaction_event)) |>
+
 
         dplyr::mutate(
             fiscal_transaction_date = lubridate::`%m+%`(transaction_date_quarter, months(3)),
@@ -56,30 +61,12 @@ clean_phoenix_transaction <- function(file,
                 lubridate::year(fiscal_transaction_date) %% 100,
                 "Q",
                 lubridate::quarter(fiscal_transaction_date)
-            )
+            ),
+            fiscal_year = lubridate::year(fiscal_transaction_date)
         ) |>
-        dplyr::rename(award_number = obl_document_number,
-                      transaction_disbursement = disbursement_amt) |>
-        dplyr::group_by(award_number, period, program_area, program_area_name) |>
-        dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop") |>
-
-        tidyr::separate(
-            period,
-            into = c("fiscal_year", "fiscal_quarter"),
-            sep = "Q",
-            convert = TRUE,
-            remove = FALSE
-        ) |>
-        dplyr::mutate(fiscal_year = as.numeric(stringr::str_sub(fiscal_year, 3, 4)) + 2000,
-                      fiscal_quarter = as.numeric(fiscal_quarter)) |>
-        dplyr::group_by(award_number,
-                        fiscal_year,
-                        fiscal_quarter,
-                        period,
-                        program_area,
-                        program_area_name) |>
+        dplyr::select(-c(transaction_date_quarter, fiscal_transaction_date)) |>
+        dplyr::group_by(award_number, period, fiscal_year, program_area) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop")
-
 
     return(temp)
 }
