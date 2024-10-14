@@ -4,12 +4,14 @@
 \alias{clean_awards}
 \title{Create a clean dataset from Active Awards google sheet (template from USAID Mozambique)}
 \usage{
-clean_awards(file, sheetname)
+clean_awards(file, sheetname, sector_name)
 }
 \arguments{
 \item{file}{filename}
 
 \item{sheetname}{name of the sheet.  Either Active Awards or Expired Awards}
+
+\item{sector_name}{sector name to be included (e.g IHO)}
 }
 \value{
 A clean dataset with the following columns:sub_sector, activity_name, award_number, total_estimated_cost,
@@ -21,6 +23,6 @@ Create a clean dataset from Active Awards google sheet (template from USAID Moza
 }
 \examples{
 \dontrun{
- df <- clean_ctive_awards("path/to/Active Awards.xlsx", "Active Awards")
+ df <- clean_ctive_awards("path/to/Active Awards.xlsx", "Active Awards", "IHO")
  }
 }

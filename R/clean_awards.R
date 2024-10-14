@@ -2,6 +2,7 @@
 #'
 #' @param sheetname name of the sheet.  Either Active Awards or Expired Awards
 #' @param file filename
+#' @param sector_name sector name to be included (e.g IHO)
 #'
 #' @return A clean dataset with the following columns:sub_sector, activity_name, award_number, total_estimated_cost,
 #'start_date, end_date, u_s_org_local, aor_cor_or_activity_manager,
@@ -10,15 +11,16 @@
 #'
 #' @examples
 #' \dontrun{
-#'  df <- clean_ctive_awards("path/to/Active Awards.xlsx", "Active Awards")
+#'  df <- clean_ctive_awards("path/to/Active Awards.xlsx", "Active Awards", "IHO")
 #'  }
-clean_awards <- function(file, sheetname){
+clean_awards <- function(file, sheetname, sector_name){
 
 
     temp <- readxl::read_xlsx(file,
                               sheet = sheetname,
                               skip = 1) |>
         janitor::clean_names() |>
+        dplyr::filter(sector == sector_name) |>
         dplyr::mutate(award_number = stringr::str_trim(award_number),
                       filename = basename(file),
                       period = stringr::str_extract(filename, "^[^_]+"),
