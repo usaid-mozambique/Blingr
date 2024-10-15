@@ -20,6 +20,7 @@ clean_phoenix_oblg_acc_lines <- function(file,
                                               DISTRIBUTION_FILTER) {
 
 
+
     temp <- suppressWarnings(readxl::read_xlsx(file)) |>
         janitor::clean_names() |>
         dplyr::select(
@@ -27,6 +28,7 @@ clean_phoenix_oblg_acc_lines <- function(file,
             document_number,
             obligation_type,
             program_area,
+            program_element,
             obligation_amt,
             disbursement_amt,
             unliquidated_amt,
@@ -51,6 +53,8 @@ clean_phoenix_oblg_acc_lines <- function(file,
             distribution %in% DISTRIBUTION_FILTER
         ) |>
 
+        dplyr::select(-c(obligation_type, distribution, document_number, filename)) |>
+
         # update program elements to new coding
         dplyr::left_join(
             blingr::data_program_element_map,
@@ -68,12 +72,8 @@ clean_phoenix_oblg_acc_lines <- function(file,
 
         #remove columns
         dplyr::select(
-            -c(
-                document_number,
-                obligation_type,
-                distribution,
-                new_program_area,
-                filename
+            -c(new_program_area,
+               program_element
             )
         ) |>
 
