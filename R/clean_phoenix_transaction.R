@@ -35,7 +35,8 @@ clean_phoenix_transaction <- function(file,
         dplyr::mutate(
             transaction_amt = as.numeric(transaction_amt),
             transaction_date = lubridate::as_date(as.numeric(transaction_date) - 1, origin = "1899-12-30"),
-            transaction_date_quarter = lubridate::floor_date(transaction_date, "quarter")
+            transaction_date_quarter = lubridate::floor_date(transaction_date, "quarter"),
+            transaction_date_month = lubridate::floor_date(transaction_date, "month"),
         ) |>
 
 
@@ -64,8 +65,8 @@ clean_phoenix_transaction <- function(file,
             ),
             fiscal_year = lubridate::year(fiscal_transaction_date)
         ) |>
-        dplyr::select(-c(transaction_date_quarter, fiscal_transaction_date)) |>
-        dplyr::group_by(award_number, period, fiscal_year, program_area) |>
+        dplyr::select(-c(transaction_date_quarter)) |>
+        dplyr::group_by(award_number, period, fiscal_year, program_area, transaction_date_month) |>
         dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop")
 
     return(temp)
