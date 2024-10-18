@@ -16,10 +16,15 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
         dplyr::group_by(award_number, program_area, fiscal_year) |>
         dplyr::arrange(period) |>
         dplyr::mutate(
-            transaction_disbursement_cumulative = cumsum(transaction_disbursement)  # Calculate cumulative sum within the year
+            transaction_disbursement_cumulative_FY = cumsum(transaction_disbursement)  # Calculate cumulative sum within the year
         )  |>
         dplyr::ungroup() |>
-        dplyr::select(-c(fiscal_year))
+        dplyr::select(-c(fiscal_year)) |>
+        dplyr::group_by(award_number, program_area) |>
+        dplyr::mutate(
+            transaction_disbursement_cumulative_total = cumsum(transaction_disbursement)  # Calculate cumulative sum across the years
+        ) |>
+        dplyr::ungroup()
 
     return(temp)
 }
