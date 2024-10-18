@@ -13,7 +13,7 @@
 create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
 
     temp <- phoenix_transaction_df |>
-        dplyr::mutate(transaction_disbursement = tidyr::replace_na(transaction_disbursement, 0))  #remove any NA values before calculating
+        dplyr::mutate(transaction_disbursement = tidyr::replace_na(transaction_disbursement, 0)) |>   #remove any NA values before calculating
         dplyr::group_by(award_number, program_area, fiscal_year) |>
         dplyr::arrange(period) |>
         dplyr::mutate(
