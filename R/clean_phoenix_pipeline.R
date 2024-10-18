@@ -27,7 +27,7 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
                       distribution %in% distribution_filter) |>
         dplyr::select(document_amt, disbursement_amt,
                       undisbursed_amt, last_qtr_accrual_amt, document_number,
-                      program_area, award_number, program_element,
+                      program_area, award_number, program_element, pipeline_amt,
                       bilateral_obl_number
         ) |>
 
@@ -36,6 +36,7 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
                       document_amt = as.numeric(document_amt),
                       disbursement_amt = as.numeric(disbursement_amt),
                       undisbursed_amt = as.numeric(undisbursed_amt),
+                      pipeline_amt = as.numeric(pipeline_amt),
                       last_qtr_accrual_amt = as.numeric(last_qtr_accrual_amt),
                       award_number = dplyr::case_when(
                           award_number %in% all_award_number ~ award_number,
