@@ -25,7 +25,9 @@ create_phoenix_transaction_cumulative <- function(phoenix_transaction_df){
         dplyr::mutate(
             transaction_disbursement_cumulative_total = cumsum(transaction_disbursement)  # Calculate cumulative sum across the years
         ) |>
-        dplyr::ungroup()
+        dplyr::ungroup()|>
+        #ensure 2 decimal places
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~ round(., 2)))
 
     return(temp)
 }

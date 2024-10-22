@@ -63,7 +63,9 @@ clean_phoenix_pipeline <- function(PHOENIX_PIPELINE_PATH, all_award_number,
 
         dplyr::filter(award_number %in% all_award_number) |>
         dplyr::group_by(award_number, period, program_area, program_area_name, bilateral_obl_number) |>
-        dplyr::summarise(dplyr::across(dplyr::where(is.numeric), sum), .groups = "drop")
+        dplyr::summarise(dplyr::across(dplyr::where(is.numeric), sum), .groups = "drop")|>
+        #ensure 2 decimal places
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~ round(., 2)))
 
 
     return(temp)

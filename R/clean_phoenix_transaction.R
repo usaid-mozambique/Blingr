@@ -67,7 +67,9 @@ clean_phoenix_transaction <- function(file,
         ) |>
         dplyr::select(-c(transaction_date_quarter)) |>
         dplyr::group_by(award_number, period, fiscal_year, program_area, transaction_date_month) |>
-        dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop")
+        dplyr::summarise(dplyr::across(dplyr::where(is.numeric), ~ sum(., na.rm = TRUE)), .groups = "drop") |>
+        #ensure 2 decimal places
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~ round(., 2)))
 
     return(temp)
 }
