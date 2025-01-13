@@ -21,6 +21,7 @@ You can install the development version of blingr from
 # install.packages("remotes")
 remotes::install_github("usaid-mozambique/blingr", repos = c('https://usaid-mozambique.r-universe.dev', 'https://cloud.r-project.org')
 
+#Load the package
 library(blingr)
 
 #List all functions in package
