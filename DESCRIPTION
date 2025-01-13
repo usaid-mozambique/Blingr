@@ -2,8 +2,7 @@ Package: blingr
 Title: Processes Phoenix and supporting data
 Version: 0.0.0.9000
 Authors@R: 
-    person("Kirstin", "Lyon", , "kirstin.c.lyon@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Kirstin", "Lyon", , "kirstin.c.lyon@gmail.com", role = c("aut", "cre"))
 Description: Convenient functions for processing data available from Phoenix as well as helper files created by the USAID Mozambique Budget teams. 
 License: MIT + file LICENSE
 Encoding: UTF-8
